@@ -42,3 +42,6 @@ release/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+#release checklist
+RELEASE_CHECKLIST.md
