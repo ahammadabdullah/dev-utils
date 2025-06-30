@@ -6,6 +6,10 @@ on:
       - "v*"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -28,8 +32,6 @@ jobs:
 
       - name: Build Electron app
         run: npm run dist:win
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -44,9 +46,28 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*.exe
+            dist/DevUtils Setup *.exe
+            dist/DevUtils-Portable-*.exe
           draft: false
           prerelease: false
           generate_release_notes: true
+          name: DevUtils ${{ github.ref_name }}
+          body: |
+            ## 🚀 DevUtils ${{ github.ref_name }}
+            
+            Download the version that suits your needs:
+            
+            ### 📦 Installer Version
+            - **DevUtils Setup ${{ github.ref_name }}.exe** - Full installer with shortcuts and uninstaller
+            
+            ### 🎒 Portable Version  
+            - **DevUtils-Portable-${{ github.ref_name }}.exe** - Portable version, no installation required
+            
+            ## 🔧 System Requirements
+            - Windows 10 or later (64-bit)
+            - No additional dependencies required
+            
+            ## 🆕 What's New
+            See [CHANGELOG.md](https://github.com/ahammadabdullah/dev-utils/blob/main/CHANGELOG.md) for detailed changes.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
