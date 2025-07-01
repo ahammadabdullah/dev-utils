@@ -43,20 +43,6 @@ Download the latest version from the [Releases](https://github.com/ahammadabdull
 2. Run the executable directly - no installation needed
 3. The app will run immediately
 
-## 🖼️ Screenshots
-
-### JSON Formatter
-
-Clean and format your JSON data with syntax highlighting.
-
-### Regex Tester
-
-Test your regular expressions with real-time feedback and match highlighting.
-
-### Color Picker
-
-Pick colors and get values in different formats (HEX, RGB, HSL).
-
 ## 🛠️ Development
 
 This project is built with:
