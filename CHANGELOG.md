@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Add new changes here before the next release -->
 
+## [1.0.1] - 2025-07-01
+
+### Fixed
+
+- Fixed blank screen issue in production builds
+- Improved development/production environment detection
+- Removed dependency on electron-is-dev for more reliable detection
+- Enhanced resource path handling for packaged applications
+
+### Changed
+
+- Updated build scripts with better separation of dev/prod modes
+- Improved error handling and debug logging
+
 ## [1.0.0] - 2025-07-01
 
 ### Added

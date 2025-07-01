@@ -1,16 +1,19 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
 const path = require("path");
-const isDev = require("electron-is-dev");
+const fs = require("fs");
+
+const isDevMode =
+  process.env.NODE_ENV !== "production" &&
+  !app.isPackaged &&
+  fs.existsSync(path.join(__dirname, "src"));
 
 let mainWindow;
 let tray;
 
-// Helper function to get the correct resource path
 function getResourcePath(relativePath) {
-  if (isDev) {
+  if (isDevMode) {
     return path.join(__dirname, relativePath);
   } else {
-    // In production, resources are in the resources/app.asar folder
     return path.join(process.resourcesPath, relativePath);
   }
 }
@@ -33,17 +36,39 @@ function createWindow() {
     },
   });
 
-  const startURL = isDev
-    ? "http://localhost:5173"
-    : `file://${path.join(__dirname, "dist/index.html")}`;
+  let startURL;
+  if (isDevMode) {
+    startURL = "http://localhost:5173";
+  } else {
+    let indexPath = path.join(__dirname, "dist", "index.html");
 
+    if (!fs.existsSync(indexPath)) {
+      const appPath = app.getAppPath();
+      indexPath = path.join(appPath, "dist", "index.html");
+
+      if (!fs.existsSync(indexPath)) {
+        indexPath = path.join(
+          process.resourcesPath,
+          "app",
+          "dist",
+          "index.html"
+        );
+      }
+    }
+
+    startURL = `file://${indexPath.replace(/\\/g, "/")}`;
+
+    console.log("Production index path:", indexPath);
+    console.log("File exists:", require("fs").existsSync(indexPath));
+  }
+
+  console.log("Loading URL:", startURL);
   mainWindow.loadURL(startURL);
 
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
 
-  // Fullscreen event listeners
   mainWindow.on("enter-full-screen", () => {
     mainWindow.webContents.send("fullscreen-changed", true);
   });
