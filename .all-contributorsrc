@@ -1,4 +1,8 @@
 {
   "projectName": "DevUtils",
-  "projectOwner": "ahammadabdullah"
+  "projectOwner": "ahammadabdullah",
+  "files": [
+    "README.md"
+  ],
+  "contributors": []
 }
