@@ -1,8 +1,21 @@
 {
-  "projectName": "DevUtils",
+  "projectName": "dev-utils",
   "projectOwner": "ahammadabdullah",
   "files": [
     "README.md"
   ],
-  "contributors": []
+  "contributors": [
+    {
+      "login": "Er-luffy-D",
+      "name": "Piyush dixit",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70336252?v=4",
+      "profile": "http://builtbypiyush.me",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7
 }
