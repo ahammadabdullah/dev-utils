@@ -10,6 +10,7 @@ import {
   Palette,
   Code,
   FileCode,
+  KeyRound,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -25,6 +26,7 @@ const iconMap = {
   Palette,
   Code,
   FileCode,
+  KeyRound
 };
 
 export function Sidebar({ activeTool, onToolChange }: SidebarProps) {

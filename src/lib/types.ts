@@ -5,7 +5,8 @@ export type ToolType =
   | 'timestamp-converter' 
   | 'color-picker'
   | 'svg-to-jsx'
-  | 'html-to-jsx';
+  | 'html-to-jsx'
+  | 'string-encoder';
 
 export interface Tool {
   id: ToolType;
@@ -56,5 +57,10 @@ export const TOOLS: Tool[] = [
     name: 'HTML to JSX',
     description: 'Convert HTML to React JSX',
     icon: 'FileCode'
-  }
+  },
+  {
+    id: 'string-encoder',
+    name: 'Base 58 And 64',
+    description: 'Encode and decode strings',
+    icon: 'KeyRound'}
 ];
