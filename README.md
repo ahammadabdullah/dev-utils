@@ -77,6 +77,13 @@ npm run build:release
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://builtbypiyush.me"><img src="https://avatars.githubusercontent.com/u/70336252?v=4?s=100" width="100px;" alt="Piyush dixit"/><br /><sub><b>Piyush dixit</b></sub></a><br /><a href="#code-Er-luffy-D" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
