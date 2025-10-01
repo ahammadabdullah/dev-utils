@@ -10,6 +10,7 @@ import { ColorPicker } from "@/features/color-picker/ColorPicker";
 import { SvgToJsx } from "@/features/svg-to-jsx/SvgToJsx";
 import { HtmlToJsx } from "@/features/html-to-jsx/HtmlToJsx";
 import { ToolType } from "@/lib/types";
+import { StringEncoder } from "./features/StringEncoder/StringEncoder";
 import WindowBar from "./components/windows/window-bar";
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
         return <SvgToJsx />;
       case "html-to-jsx":
         return <HtmlToJsx />;
+      case 'string-encoder':
+        return <StringEncoder/>;
       default:
         return <JsonFormatter />;
     }
