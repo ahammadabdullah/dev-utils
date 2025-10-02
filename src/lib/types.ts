@@ -7,7 +7,8 @@ export type ToolType =
   | 'svg-to-jsx'
   | 'html-to-jsx'
   | 'string-encoder'
-  | 'jwt-decoder';
+  | 'jwt-decoder'
+  | 'gitignore-generator';
 
 export interface Tool {
   id: ToolType;
@@ -70,5 +71,11 @@ export const TOOLS: Tool[] = [
     name: 'JWT Decoder',
     description: 'Decode and inspect JWT tokens',
     icon: 'Shield'
+  },
+  {
+    id: 'gitignore-generator',
+    name: 'Gitignore Generator',
+    description: 'Generate .gitignore files for your projects',
+    icon: 'FileJson'
   }
 ];
