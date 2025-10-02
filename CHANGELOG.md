@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Add new changes here before the next release -->
 
+## [1.1.2] - 2025-10-03
+
+### Technical
+
+- Added blockmap to the release
+- Specified artifact name for the auto-updater
+
 ## [1.1.1] - 2025-10-03
 
 ### Added
