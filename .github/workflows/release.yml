@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Build Electron app
-        run: npm run dist:win
+        run: npm run dist:win -- --publish never
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
