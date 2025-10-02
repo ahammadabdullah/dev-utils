@@ -30,44 +30,33 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Build Electron app
-        run: npm run dist:win
+      - name: Build and Publish Electron app
+        run: npm run dist:win -- --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_RELEASE_BODY: |
+            ## 🚀 DevUtils ${{ github.ref_name }}
 
-      - name: Upload artifacts
+            Download the version that suits your needs:
+
+            ### 📦 Installer Version
+            - **DevUtils Setup ${{ github.ref_name }}.exe** - Full installer with shortcuts and uninstaller
+
+            ### 🎒 Portable Version  
+            - **DevUtils-Portable-${{ github.ref_name }}.exe** - Portable version, no installation required
+
+            ## 🔧 System Requirements
+            - Windows 10 or later (64-bit)
+            - No additional dependencies required
+
+            ## 🆕 What's New
+            See [CHANGELOG.md](https://github.com/ahammadabdullah/dev-utils/blob/main/CHANGELOG.md) for detailed changes.
+
+      - name: Upload artifacts (optional backup)
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
           path: |
             dist/*.exe
             dist/*.exe.blockmap
-
-      - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            dist/DevUtils Setup *.exe
-            dist/DevUtils-Portable-*.exe
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-          name: DevUtils ${{ github.ref_name }}
-          body: |
-            ## 🚀 DevUtils ${{ github.ref_name }}
-            
-            Download the version that suits your needs:
-            
-            ### 📦 Installer Version
-            - **DevUtils Setup ${{ github.ref_name }}.exe** - Full installer with shortcuts and uninstaller
-            
-            ### 🎒 Portable Version  
-            - **DevUtils-Portable-${{ github.ref_name }}.exe** - Portable version, no installation required
-            
-            ## 🔧 System Requirements
-            - Windows 10 or later (64-bit)
-            - No additional dependencies required
-            
-            ## 🆕 What's New
-            See [CHANGELOG.md](https://github.com/ahammadabdullah/dev-utils/blob/main/CHANGELOG.md) for detailed changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            dist/latest.yml
