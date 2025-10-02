@@ -5,12 +5,30 @@ import { ThemeToggle } from "../ui/theme-toggle";
 
 export default function WindowBar() {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [platform, setPlatform] = useState<string>("");
 
   useEffect(() => {
-    window.electronAPI?.onFullscreenChange((fullscreen: boolean) => {
+    setPlatform(window.electronAPI?.platform ?? "");
+    
+    const unsubscribe = window.electronAPI?.onFullscreenChange?.((fullscreen: boolean) => {
       setIsFullscreen(fullscreen);
     });
+
+    return () => {
+      // clean up listener if provided
+      if (typeof unsubscribe === "function") unsubscribe();
+    };
   }, []);
+
+  if (platform === "darwin") {
+    return (
+      <div className="h-10 w-full bg-background border-b border-border flex items-center justify-end px-4">
+        <div className="flex items-center gap-1" style={{ WebkitAppRegion: "no-drag" } as any}>
+          <ThemeToggle />
+        </div>
+      </div>
+    );
+  }
 
   const toggleFullscreen = async () => {
     const newState = await window.electronAPI?.toggleFullscreen();

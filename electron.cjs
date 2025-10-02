@@ -26,8 +26,8 @@ function createWindow() {
     height: 800,
     minWidth: 900,
     minHeight: 600,
-    frame: false,
-    titleBarStyle: "hidden",
+    frame: process.platform === "darwin" ? true : false,
+    titleBarStyle: process.platform === "darwin" ? "hiddenInset" : "hidden",
     icon: iconPath,
     webPreferences: {
       nodeIntegration: false,
@@ -76,6 +76,16 @@ function createWindow() {
   mainWindow.on("leave-full-screen", () => {
     mainWindow.webContents.send("fullscreen-changed", false);
   });
+
+  if (process.platform === "darwin") {
+    app.dock.setIcon(getResourcePath("assets/icon.icns"));
+    mainWindow.on("close", (e) => {
+      if (!app.isQuiting) {
+        e.preventDefault();
+        mainWindow.hide();
+      }
+    });
+  }
 }
 
 app.on("ready", () => {
@@ -85,7 +95,10 @@ app.on("ready", () => {
   tray = new Tray(trayIconPath);
   const contextMenu = Menu.buildFromTemplate([
     { label: "Show", click: () => mainWindow && mainWindow.show() },
-    { label: "Quit", click: () => app.quit() },
+    { label: "Quit", click: () => {
+      app.isQuiting = true;
+      app.quit();
+    }},
   ]);
   tray.setToolTip("DevUtils");
   tray.setContextMenu(contextMenu);
@@ -98,9 +111,15 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  if (mainWindow === null) {
+  if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+  } else if (mainWindow) {
+    mainWindow.show();
   }
+});
+
+app.on("before-quit", () => {
+  app.isQuiting = true;
 });
 
 // IPC handlers

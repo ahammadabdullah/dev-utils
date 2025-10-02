@@ -33,11 +33,17 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "generate:icons": "node scripts/generate-icons.cjs",
+    "prebuild": "npm run generate:icons",
     "electron:dev": "electron .",
     "electron:prod": "cross-env NODE_ENV=production electron .",
     "dist": "electron-builder",
     "dist:win": "electron-builder --win",
-    "build:release": "npm run build && npm run dist:win"
+    "dist:mac": "electron-builder --mac",
+    "dist:all": "electron-builder --win --mac",
+    "build:release": "npm run build && npm run dist:win",
+    "build:release:mac": "npm run build && npm run dist:mac",
+    "build:release:all": "npm run build && npm run dist:all"
   },
   "build": {
     "appId": "com.ahammadabdullah.devutils",
@@ -75,6 +81,51 @@
         }
       ],
       "verifyUpdateCodeSignature": false
+    },
+    "mac": {
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "minimumSystemVersion": "10.13.0",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "config/entitlements.mac.plist",
+      "entitlementsInherit": "config/entitlements.mac.plist"
+    },
+    "dmg": {
+      "title": "DevUtils",
+      "icon": "assets/icon.icns",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
     },
     "nsis": {
       "oneClick": false,
@@ -123,6 +174,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
+    "dmg-license": "^1.0.11",
     "electron": "^37.1.0",
     "electron-builder": "^26.0.12",
     "eslint": "^9.11.1",
