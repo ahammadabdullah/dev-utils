@@ -82,7 +82,8 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "DevUtils"
+      "shortcutName": "DevUtils",
+      "artifactName": "DevUtils-Setup-${version}.${ext}"
     },
     "portable": {
       "artifactName": "DevUtils-Portable-${version}.exe"
