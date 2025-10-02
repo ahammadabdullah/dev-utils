@@ -15,8 +15,8 @@ export function HtmlToJsx() {
     { name: string; type: string; content: string }[]
   >([]);
 
-  const handleConvert = () => {
-    const result = convertHtmlToJsx(htmlInput);
+  const handleConvert = async () => {
+    const result = await convertHtmlToJsx(htmlInput);
     setJsxOutput(result.jsx);
     setGeneratedFiles(result.files);
   };

@@ -1,3 +1,7 @@
+import * as prettier from "prettier/standalone";
+import * as babelParser from "prettier/parser-babel";
+import estree from "prettier/plugins/estree";
+
 export function useHtmlToJsx() {
   const validateHtml = (htmlString: string): boolean => {
     try {
@@ -16,9 +20,9 @@ export function useHtmlToJsx() {
     content: string;
   };
 
-  const convertHtmlToJsx = (
+  const convertHtmlToJsx = async (
     htmlString: string
-  ): { jsx: string; files: GeneratedFile[] } => {
+  ): Promise<{ jsx: string; files: GeneratedFile[] }> => {
     if (!htmlString.trim()) {
       return { jsx: "", files: [] };
     }
@@ -36,7 +40,7 @@ export function useHtmlToJsx() {
       const files: GeneratedFile[] = [];
       let styleCounter = 0;
       let scriptCounter = 0;
-      let metaContents: string[] = [];
+      const metaContents: string[] = [];
 
       // Remove <!DOCTYPE>, <html>, <head>, <body>, <title>
       jsx = jsx.replace(/<!DOCTYPE[^>]*>/i, "");
@@ -98,13 +102,13 @@ export function useHtmlToJsx() {
         "autoplay","controls","defer","hidden","loop","open","required","reversed"
       ];
       booleanAttributes.forEach((attr) => {
-        const regex = new RegExp(`\\b${attr}(?!=)`, "gi");
+        const regex = new RegExp(`\b${attr}(?!=)`, "gi");
         jsx = jsx.replace(regex, `${attr}={true}`);
       });
 
       // External CSS
       jsx = jsx.replace(
-        /<link[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["'][^>]*\/?>/gi,
+        /<link[^>]*rel=['"]stylesheet['"][^>]*href=['"]([^'"']+)['"][^>]*\/?>/gi,
         (_match, href) => {
           imports.push(`import '${href}';`);
           return "";
@@ -113,7 +117,7 @@ export function useHtmlToJsx() {
 
       // External JS
       jsx = jsx.replace(
-        /<script[^>]*src=["']([^"']+)["'][^>]*>\s*<\/script>/gi,
+        /<script[^>]*src=['"]([^'"']+)['"][^>]*>\s*<\/script>/gi,
         (_match, src) => {
           imports.push(`import '${src}';`);
           return "";
@@ -143,14 +147,22 @@ ${imports.join("\n")}
 
 const ${componentName} = () => {
   return (
-${jsx.split("\n").map((l) => "    " + l).join("\n")}
+    <>
+${jsx.split("\n").map((l) => "      " + l).join("\n")}
+    </>
   );
 };
 
 export default ${componentName};`;
 
-      return { jsx: jsxCode, files };
-    } catch {
+      const formattedJsx = await prettier.format(jsxCode, {
+        parser: "babel",
+        plugins: [babelParser, estree],
+      });
+
+      return { jsx: formattedJsx, files };
+    } catch (e) {
+      console.error(e)
       return { jsx: "Error converting HTML to JSX. Please check your HTML syntax.", files: [] };
     }
   };
