@@ -30,11 +30,30 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Build and Publish Electron app
-        run: npm run dist:win -- --publish always
-        env:
-          GH_TOKEN: ${{secrets.GH_TOKEN}}
-          GH_RELEASE_BODY: |
+      - name: Build Electron app
+        run: npm run dist:win
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: |
+            dist/*.exe
+            dist/*.exe.blockmap
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/DevUtils Setup *.exe
+            dist/DevUtils-Portable-*.exe
+            dist/latest.yml
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          name: DevUtils ${{ github.ref_name }}
+          body: |
             ## 🚀 DevUtils ${{ github.ref_name }}
 
             Download the version that suits your needs:
@@ -51,12 +70,5 @@ jobs:
 
             ## 🆕 What's New
             See [CHANGELOG.md](https://github.com/ahammadabdullah/dev-utils/blob/main/CHANGELOG.md) for detailed changes.
-
-      - name: Upload artifacts (optional backup)
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build
-          path: |
-            dist/*.exe
-            dist/*.exe.blockmap
-            dist/latest.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
