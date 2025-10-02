@@ -81,6 +81,7 @@ npm run build:release
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://builtbypiyush.me"><img src="https://avatars.githubusercontent.com/u/70336252?v=4?s=100" width="100px;" alt="Piyush dixit"/><br /><sub><b>Piyush dixit</b></sub></a><br /><a href="#code-Er-luffy-D" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/rohandol112"><img src="https://avatars.githubusercontent.com/u/133633875?v=4?s=100" width="100px;" alt="rohandol112"/><br /><sub><b>rohandol112</b></sub></a><br /><a href="#code-rohandol112" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
