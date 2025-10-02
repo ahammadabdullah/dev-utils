@@ -8,12 +8,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      'prettier/standalone': 'prettier/standalone.js',
-      'prettier/parser-babel': 'prettier/parser-babel.js',
     },
   },
   optimizeDeps: {
     exclude: ["lucide-react"],
-    include: ['prettier/standalone','prettier/parser-typescript']
   },
 });
