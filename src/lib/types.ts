@@ -6,7 +6,8 @@ export type ToolType =
   | 'color-picker'
   | 'svg-to-jsx'
   | 'html-to-jsx'
-  | 'string-encoder';
+  | 'string-encoder'
+  | 'jwt-decoder';
 
 export interface Tool {
   id: ToolType;
@@ -62,5 +63,12 @@ export const TOOLS: Tool[] = [
     id: 'string-encoder',
     name: 'Base 58 And 64',
     description: 'Encode and decode strings',
-    icon: 'KeyRound'}
+    icon: 'KeyRound'
+  },
+  {
+    id: 'jwt-decoder',
+    name: 'JWT Decoder',
+    description: 'Decode and inspect JWT tokens',
+    icon: 'Shield'
+  }
 ];
