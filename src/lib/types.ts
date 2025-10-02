@@ -7,7 +7,8 @@ export type ToolType =
   | 'svg-to-jsx'
   | 'html-to-jsx'
   | 'string-encoder'
-  | 'jwt-decoder';
+  | 'jwt-decoder'
+  | 'hash-generator';
 
 export interface Tool {
   id: ToolType;
@@ -70,5 +71,11 @@ export const TOOLS: Tool[] = [
     name: 'JWT Decoder',
     description: 'Decode and inspect JWT tokens',
     icon: 'Shield'
+  },
+  {
+    id: 'hash-generator',
+    name: 'Hash Generator',
+    description: 'Generate MD5, SHA-1, SHA-256, SHA-512 hashes',
+    icon: 'Hash'
   }
 ];
