@@ -9,11 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Add new changes here before the next release -->
 
-## [1.1.0] - 2025-10-03
+## [1.1.1] - 2025-10-03
 
 ### Added
 
 - **Auto Updater** integration for seamless updates
+- **Release method updated** to use manual github release workflow
+- **logger** for better debugging and diagnostics
+
+### Fixed
+
+- Minor bug fixes and stability improvements
+
+## [1.1.0] - 2025-10-03
+
+### Added
+
 - **Release method updated** to use `electron-builder` for packaging and publishing
 - **Version number** now displayed in the application title bar
 - New tools:

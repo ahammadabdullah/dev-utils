@@ -23,7 +23,7 @@ export default function WindowBar() {
       style={{ WebkitAppRegion: "drag" } as any}
     >
       <div className="text-sm font-medium tracking-wide text-muted-foreground">
-        DevUtils <span className="text-[10px]">v1.1.0</span>
+        DevUtils <span className="text-[10px]">v1.1.1</span>
       </div>
 
       <div
