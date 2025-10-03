@@ -12,6 +12,7 @@ import { HtmlToJsx } from "@/features/html-to-jsx/HtmlToJsx";
 import { ToolType } from "@/lib/types";
 import { StringEncoder } from "./features/StringEncoder/StringEncoder";
 import { JWTDecoder } from "./features/jwt-decoder/JWTDecoder";
+import GitignoreGenerator from "./features/gitignore-generator/GitignoreGenerator";
 import WindowBar from "./components/windows/window-bar";
 
 function App() {
@@ -33,10 +34,12 @@ function App() {
         return <SvgToJsx />;
       case "html-to-jsx":
         return <HtmlToJsx />;
-      case 'string-encoder':
-        return <StringEncoder/>;
-      case 'jwt-decoder':
-        return <JWTDecoder/>;
+      case "string-encoder":
+        return <StringEncoder />;
+      case "jwt-decoder":
+        return <JWTDecoder />;
+      case "gitignore-generator":
+        return <GitignoreGenerator />;
       default:
         return <JsonFormatter />;
     }

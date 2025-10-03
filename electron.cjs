@@ -2,6 +2,13 @@ const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
+const { autoUpdater } = require("electron-updater");
+const log = require("electron-log");
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
+log.info("App starting...");
+
 const isDevMode =
   process.env.NODE_ENV !== "production" &&
   !app.isPackaged &&
@@ -101,6 +108,7 @@ app.on("ready", () => {
   ]);
   tray.setToolTip("DevUtils");
   tray.setContextMenu(contextMenu);
+  autoUpdater.checkForUpdatesAndNotify();
 });
 
 app.on("window-all-closed", () => {

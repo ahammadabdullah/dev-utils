@@ -9,10 +9,12 @@ export default function WindowBar() {
 
   useEffect(() => {
     setPlatform(window.electronAPI?.platform ?? "");
-    
-    const unsubscribe = window.electronAPI?.onFullscreenChange?.((fullscreen: boolean) => {
-      setIsFullscreen(fullscreen);
-    });
+
+    const unsubscribe = window.electronAPI?.onFullscreenChange?.(
+      (fullscreen: boolean) => {
+        setIsFullscreen(fullscreen);
+      }
+    );
 
     return () => {
       // clean up listener if provided
@@ -23,7 +25,10 @@ export default function WindowBar() {
   if (platform === "darwin") {
     return (
       <div className="h-10 w-full bg-background border-b border-border flex items-center justify-end px-4">
-        <div className="flex items-center gap-1" style={{ WebkitAppRegion: "no-drag" } as any}>
+        <div
+          className="flex items-center gap-1"
+          style={{ WebkitAppRegion: "no-drag" } as any}
+        >
           <ThemeToggle />
         </div>
       </div>
@@ -41,7 +46,7 @@ export default function WindowBar() {
       style={{ WebkitAppRegion: "drag" } as any}
     >
       <div className="text-sm font-medium tracking-wide text-muted-foreground">
-        DevUtils
+        DevUtils <span className="text-[10px]">v1.1.2</span>
       </div>
 
       <div
