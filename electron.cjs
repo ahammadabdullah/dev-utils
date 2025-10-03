@@ -78,7 +78,6 @@ function createWindow() {
   });
 
   if (process.platform === "darwin") {
-    app.dock.setIcon(getResourcePath("assets/icon.icns"));
     mainWindow.on("close", (e) => {
       if (!app.isQuiting) {
         e.preventDefault();

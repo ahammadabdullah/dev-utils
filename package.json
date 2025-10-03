@@ -48,15 +48,25 @@
   "build": {
     "appId": "com.ahammadabdullah.devutils",
     "productName": "DevUtils",
+    "compression": "maximum",
+    "asar": true,
     "directories": {
-      "output": "dist"
+      "output": "release"
     },
     "files": [
-      "dist/",
+      "dist/**",
       "electron.cjs",
       "preload.cjs",
       "package.json",
-      "assets/"
+      "!**/node_modules/**",
+      "!**/*.map",
+      "!**/*.ts",
+      "!**/*.tsx",
+      "!**/tsconfig*.json",
+      "!**/*.tsbuildinfo",
+      "!**/.vscode/**",
+      "!**/.github/**",
+      "!scripts/**"
     ],
     "extraResources": [
       {
@@ -88,13 +98,6 @@
       "target": [
         {
           "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        },
-        {
-          "target": "zip",
           "arch": [
             "x64",
             "arm64"
