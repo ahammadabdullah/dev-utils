@@ -42,8 +42,9 @@ export function Sidebar({ activeTool, onToolChange }: SidebarProps) {
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-2">
           {TOOLS.map((tool) => {
-            const Icon = iconMap[tool.icon as keyof typeof iconMap] || HelpCircle;
-            
+            const Icon =
+              iconMap[tool.icon as keyof typeof iconMap] || HelpCircle;
+
             return (
               <Button
                 key={tool.id}
@@ -51,7 +52,7 @@ export function Sidebar({ activeTool, onToolChange }: SidebarProps) {
                 className="w-full justify-start gap-3 p-3 h-auto"
                 onClick={() => onToolChange(tool.id)}
               >
-                {tool.id === 'gitignore-generator' ? (
+                {tool.id === "gitignore-generator" ? (
                   <FileText className="h-4 w-4 flex-shrink-0" />
                 ) : (
                   <Icon className="h-4 w-4 flex-shrink-0" />

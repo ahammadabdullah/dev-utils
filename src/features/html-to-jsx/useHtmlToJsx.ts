@@ -74,7 +74,9 @@ export function useHtmlToJsx() {
           .map((s: string) => {
             const [property, value] = s.split(":").map((p) => p.trim());
             if (!property || !value) return "";
-            const camelCase = property.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+            const camelCase = property.replace(/-([a-z])/g, (g) =>
+              g[1].toUpperCase()
+            );
             const processedValue = isNaN(Number(value)) ? `"${value}"` : value;
             return `${camelCase}: ${processedValue}`;
           })
@@ -85,8 +87,20 @@ export function useHtmlToJsx() {
 
       // Self-closing tags
       const selfClosingTags = [
-        "area","base","br","col","embed","hr","img","input","link","meta",
-        "param","source","track","wbr"
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr",
       ];
       selfClosingTags.forEach((tag) => {
         const regex = new RegExp(`<${tag}([^>]*?)(?<!/)>`, "gi");
@@ -98,8 +112,20 @@ export function useHtmlToJsx() {
 
       // Boolean attributes
       const booleanAttributes = [
-        "checked","selected","disabled","readonly","multiple","autofocus",
-        "autoplay","controls","defer","hidden","loop","open","required","reversed"
+        "checked",
+        "selected",
+        "disabled",
+        "readonly",
+        "multiple",
+        "autofocus",
+        "autoplay",
+        "controls",
+        "defer",
+        "hidden",
+        "loop",
+        "open",
+        "required",
+        "reversed",
       ];
       booleanAttributes.forEach((attr) => {
         const regex = new RegExp(`\b${attr}(?!=)`, "gi");
@@ -125,20 +151,30 @@ export function useHtmlToJsx() {
       );
 
       // Inline <style>
-      jsx = jsx.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (_match, cssContent) => {
-        const fileName = `generated-styles${styleCounter++ || ""}.css`;
-        imports.push(`import './${fileName}';`);
-        files.push({ name: fileName, type: "css", content: cssContent.trim() });
-        return "";
-      });
+      jsx = jsx.replace(
+        /<style[^>]*>([\s\S]*?)<\/style>/gi,
+        (_match, cssContent) => {
+          const fileName = `generated-styles${styleCounter++ || ""}.css`;
+          imports.push(`import './${fileName}';`);
+          files.push({
+            name: fileName,
+            type: "css",
+            content: cssContent.trim(),
+          });
+          return "";
+        }
+      );
 
       // Inline <script>
-      jsx = jsx.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, (_match, jsContent) => {
-        const fileName = `generated-scripts${scriptCounter++ || ""}.js`;
-        imports.push(`import './${fileName}';`);
-        files.push({ name: fileName, type: "js", content: jsContent.trim() });
-        return "";
-      });
+      jsx = jsx.replace(
+        /<script[^>]*>([\s\S]*?)<\/script>/gi,
+        (_match, jsContent) => {
+          const fileName = `generated-scripts${scriptCounter++ || ""}.js`;
+          imports.push(`import './${fileName}';`);
+          files.push({ name: fileName, type: "js", content: jsContent.trim() });
+          return "";
+        }
+      );
 
       // Final JSX component
       const componentName = "HtmlComponent";
@@ -148,7 +184,10 @@ ${imports.join("\n")}
 const ${componentName} = () => {
   return (
     <>
-${jsx.split("\n").map((l) => "      " + l).join("\n")}
+${jsx
+  .split("\n")
+  .map((l) => "      " + l)
+  .join("\n")}
     </>
   );
 };
@@ -162,8 +201,11 @@ export default ${componentName};`;
 
       return { jsx: formattedJsx, files };
     } catch (e) {
-      console.error(e)
-      return { jsx: "Error converting HTML to JSX. Please check your HTML syntax.", files: [] };
+      console.error(e);
+      return {
+        jsx: "Error converting HTML to JSX. Please check your HTML syntax.",
+        files: [],
+      };
     }
   };
 
