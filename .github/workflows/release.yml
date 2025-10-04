@@ -11,114 +11,19 @@ permissions:
   packages: write
 
 jobs:
+  # Use reusable workflow for Windows build
   build-windows:
-    name: Build Windows
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    uses: ./.github/workflows/build-windows.yml
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build application
-        run: npm run build
-
-      - name: Build Electron app (Windows)
-        run: npm run dist:win -- --publish never
-
-      - name: Upload Windows artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build
-          path: |
-            release/*.exe
-            release/*.exe.blockmap
-            release/latest.yml
-
-  build-macos:
-    name: Build macOS
-    runs-on: macos-latest
-    env:
-      # Code signing certificate (base64-encoded .p12) and its password
-      CSC_LINK: ${{ secrets.MAC_CERTIFICATE }}
-      CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
-      # Notarization via App Store Connect API key (preferred)
-      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-      APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
-      APPLE_API_KEY_CONTENT: ${{ secrets.APPLE_API_KEY }}
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      # If you prefer Apple ID notarization, set APPLE_ID and APPLE_APP_SPECIFIC_PASSWORD secrets instead
-      # APPLE_ID: ${{ secrets.APPLE_ID }}
-      # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Prepare Apple API key file (if provided)
-        shell: bash
-        run: |
-          if [ -n "$APPLE_API_KEY_CONTENT" ] && [ -n "$APPLE_API_KEY_ID" ]; then
-            mkdir -p "$HOME/.private_keys"
-            KEY_PATH="$HOME/.private_keys/AuthKey_${APPLE_API_KEY_ID}.p8"
-            # Write the raw .p8 content from the secret into a file
-            printf "%s" "$APPLE_API_KEY_CONTENT" > "$KEY_PATH"
-            chmod 600 "$KEY_PATH"
-            echo "APPLE_API_KEY=$KEY_PATH" >> "$GITHUB_ENV"
-            echo "Apple API key saved to $KEY_PATH"
-          fi
-
-      - name: Configure notarization toggle
-        shell: bash
-        run: |
-          # Skip notarization on forks or when any required secret is missing
-          if [ -z "$CSC_LINK" ] || \
-             [ -z "$CSC_KEY_PASSWORD" ] || \
-             { [ -z "$APPLE_API_KEY_ID" ] || [ -z "$APPLE_API_ISSUER" ] || [ -z "$APPLE_API_KEY" ]; } && \
-             { [ -z "$APPLE_ID" ] || [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ]; }; then
-            echo "ELECTRON_BUILD_SKIP_NOTARIZE=true" >> "$GITHUB_ENV"
-            echo "Notarization disabled (missing secrets). Building unsigned artifact for testing only."
-          else
-            echo "ELECTRON_BUILD_SKIP_NOTARIZE=false" >> "$GITHUB_ENV"
-            echo "Notarization enabled."
-          fi
-
-      - name: Build application
-        run: npm run build
-
-      - name: Build Electron app (macOS)
-        run: npm run dist:mac -- --publish never
-
-      - name: Upload macOS artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-build
-          path: |
-            release/*.dmg
-            release/*.dmg.blockmap
-            release/latest-mac.yml
+  # macOS build temporarily disabled. When ready, switch to the reusable workflow below.
+  # build-macos:
+  #   uses: ./.github/workflows/build-macos.yml
 
   release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     needs:
       - build-windows
-      - build-macos
     steps:
       - name: Download Windows artifacts
         uses: actions/download-artifact@v4
@@ -126,11 +31,11 @@ jobs:
           name: windows-build
           path: release
 
-      - name: Download macOS artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-build
-          path: release
+      # - name: Download macOS artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: macos-build
+      #     path: release
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
@@ -139,10 +44,7 @@ jobs:
           files: |
             release/*.exe
             release/*.exe.blockmap
-            release/*.dmg
-            release/*.dmg.blockmap
             release/latest.yml
-            release/latest-mac.yml
           draft: false
           prerelease: false
           generate_release_notes: true
@@ -158,14 +60,6 @@ jobs:
             
             ### 🔧 System Requirements
             - Windows 10 or later (64-bit)
-            - No additional dependencies required
-
-            ## MacOS Version
-            - **DevUtils-${{ github.ref_name }}-arm64.dmg** - Disk image for easy installation on Apple Silicon
-            - **DevUtils-${{ github.ref_name }}.dmg** - Disk image for easy installation on Intel Macs
-
-            ### 🔧 System Requirements
-            - macOS 13 or later (Apple Silicon / Intel)
             - No additional dependencies required
 
             ## 🆕 What's New
