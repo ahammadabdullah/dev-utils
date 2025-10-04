@@ -85,10 +85,18 @@ function createWindow() {
   });
 
   if (process.platform === "darwin") {
+    // For macOS, hide the window instead of closing
     mainWindow.on("close", (e) => {
       if (!app.isQuiting) {
         e.preventDefault();
-        mainWindow.hide();
+        if (mainWindow.isFullScreen()) {
+          mainWindow.once("leave-full-screen", () => {
+            mainWindow.hide();
+          });
+          mainWindow.setFullScreen(false);
+        } else {
+          mainWindow.hide();
+        }
       }
     });
   }

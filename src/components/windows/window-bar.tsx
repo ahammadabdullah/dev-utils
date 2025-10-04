@@ -24,7 +24,10 @@ export default function WindowBar() {
 
   if (platform === "darwin") {
     return (
-      <div className="h-10 w-full bg-background border-b border-border flex items-center justify-end px-4">
+      <div
+        className="h-10 w-full bg-background border-b border-border flex items-center justify-end px-4"
+        style={{ WebkitAppRegion: "drag" } as any}
+      >
         <div
           className="flex items-center gap-1"
           style={{ WebkitAppRegion: "no-drag" } as any}
