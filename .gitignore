@@ -43,5 +43,9 @@ release/
 ehthumbs.db
 Thumbs.db
 
+# Generated assets
+assets/icon.iconset
+assets/icon.icns
+
 #release checklist
 RELEASE_CHECKLIST.md

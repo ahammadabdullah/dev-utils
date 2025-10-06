@@ -34,12 +34,12 @@ function App() {
         return <SvgToJsx />;
       case "html-to-jsx":
         return <HtmlToJsx />;
-      case 'string-encoder':
-        return <StringEncoder/>;
-      case 'jwt-decoder':
-        return <JWTDecoder/>;
-      case 'gitignore-generator':
-        return <GitignoreGenerator/>;
+      case "string-encoder":
+        return <StringEncoder />;
+      case "jwt-decoder":
+        return <JWTDecoder />;
+      case "gitignore-generator":
+        return <GitignoreGenerator />;
       default:
         return <JsonFormatter />;
     }
