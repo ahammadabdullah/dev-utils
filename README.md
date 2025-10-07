@@ -17,6 +17,7 @@ A collection of essential developer utility tools built with Electron, React, an
 ## 📋 System Requirements
 
 - Windows 10 or later (64-bit)
+- macOS 10.13 or later (Intel or Apple Silicon) - local builds only
 - No additional dependencies required
 
 ## 📥 Download
@@ -25,23 +26,79 @@ A collection of essential developer utility tools built with Electron, React, an
 
 Download the latest version from the [Releases](https://github.com/ahammadabdullah/dev-utils/releases) page:
 
-- **Installer**: `DevUtils-Setup-{version}.exe` - Full installer with shortcuts
-- **Portable**: `DevUtils-Portable-{version}.exe` - Portable version, no installation required
+- **Windows Installer**: `DevUtils-Setup-{version}.exe` - Full installer with shortcuts
+- **Windows Portable**: `DevUtils-Portable-{version}.exe` - Portable version, no installation required
+
+**Note**: macOS builds are supported locally only; no official macOS release is available yet.
 
 ## 🔧 Installation
 
-### Installer Version
+### Windows Installer Version
 
 1. Download `DevUtils-Setup-{version}.exe`
 2. Run the installer
 3. Follow the installation wizard
-4. Launch DevUtils from Start Menu or Desktop shortcut
+4. Launch DevUtils from the Start Menu or Desktop shortcut
 
-### Portable Version
+### Windows Portable Version
 
 1. Download `DevUtils-Portable-{version}.exe`
-2. Run the executable directly - no installation needed
+2. Run the executable directly — no installation needed
 3. The app will run immediately
+
+### macOS Local Build
+To build DevUtils for macOS locally:
+
+#### Prerequisites
+- You must be on macOS (cannot cross-build from Windows/Linux).
+
+- Node.js (LTS) and npm installed.
+
+- Xcode Command Line Tools installed:
+```bash
+xcode-select --install
+```
+
+#### Commands
+
+**Generate icons (required before packaging):**
+```bash
+npm run generate:icons
+```
+
+**Build and package** (two options):
+
+1. Single-step build and package
+```bash
+npm run build:release:mac
+```
+
+2. Manual two-step
+```bash
+npm run build
+npm run dist:mac
+```
+The packaged `.dmg` file will be available inside the `release/` directory.
+
+Unsigned local builds may show Gatekeeper warnings.
+
+#### Notes
+
+- Builds target both x64 and arm64 architectures
+
+- Minimum supported macOS version: 10.13
+
+- Uses Hardened Runtime and `config/entitlements.mac.plist` for signing
+
+#### Troubleshooting
+
+- Error: "macOS builds can only be run on macOS" → You are attempting to build on Windows/Linux
+
+- Missing icons/assets → Re-run:
+```bash
+npm run predist:mac
+```
+
 
 ## 🛠️ Development
 
@@ -111,4 +168,4 @@ Give a ⭐️ if this project helped you!
 
 ---
 
-**Note**: This application is currently available for Windows only. macOS and Linux support may be added in the future.
+**Note:** Only Windows packages are officially released. macOS builds are supported locally but not yet released.
