@@ -63,8 +63,7 @@ xcode-select --install
 
 **Generate icons (required before packaging):**
 ```bash
-npm run predist:mac
-# This runs "npm run generate:icons"
+npm run generate:icons
 ```
 
 **Build and package** (two options):
@@ -112,7 +111,7 @@ This project is built with:
 - **Tailwind CSS** - Styling
 - **shadcn/ui** - UI components
 
-### Building from Source (Windows)
+### Building from Source
 
 ```bash
 # Clone the repository
