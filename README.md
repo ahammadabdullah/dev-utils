@@ -17,6 +17,7 @@ A collection of essential developer utility tools built with Electron, React, an
 ## 📋 System Requirements
 
 - Windows 10 or later (64-bit)
+- macOS 10.13 or later (Intel or Apple Silicon)
 - No additional dependencies required
 
 ## 📥 Download
@@ -25,23 +26,31 @@ A collection of essential developer utility tools built with Electron, React, an
 
 Download the latest version from the [Releases](https://github.com/ahammadabdullah/dev-utils/releases) page:
 
-- **Installer**: `DevUtils-Setup-{version}.exe` - Full installer with shortcuts
-- **Portable**: `DevUtils-Portable-{version}.exe` - Portable version, no installation required
+- **Windows Installer**: `DevUtils-Setup-{version}.exe` - Full installer with shortcuts
+- **Windows Portable**: `DevUtils-Portable-{version}.exe` - Portable version, no installation required
+- **macOS DMG**: `DevUtils-{version}.dmg` - macOS disk image installer
 
 ## 🔧 Installation
 
-### Installer Version
+### Windows Installer Version
 
 1. Download `DevUtils-Setup-{version}.exe`
 2. Run the installer
 3. Follow the installation wizard
-4. Launch DevUtils from Start Menu or Desktop shortcut
+4. Launch DevUtils from the Start Menu or Desktop shortcut
 
-### Portable Version
+### Windows Portable Version
 
 1. Download `DevUtils-Portable-{version}.exe`
-2. Run the executable directly - no installation needed
+2. Run the executable directly — no installation needed
 3. The app will run immediately
+
+### macOS Version
+
+1. Download `DevUtils-{version}.dmg`
+2. Open the DMG and drag **DevUtils.app** to your **Applications** folder
+3. Launch DevUtils from Launchpad or Finder
+4. (If prompted by Gatekeeper) Right-click the app → **Open** once to allow unsigned apps
 
 ## 🛠️ Development
 
@@ -68,8 +77,65 @@ npm install
 npm run dev
 npm run electron
 
-# Build for production
+# Build for production (Windows)
 npm run build:release
+```
+### Building for macOS
+To build the macOS version of DevUtils, follow these steps:
+
+#### Prerequisites
+- You must be on macOS to build macOS artifacts (Apple’s signing and packaging restrictions prevent cross-building from Windows or Linux).
+
+- Node.js (LTS) and npm installed.
+
+- Xcode Command Line Tools installed:
+```bash
+xcode-select --install
+```
+- (Optional) Apple Developer ID and notarization credentials, if you plan to sign and distribute the app.
+
+#### Commands
+
+**Generate icons (required before packaging):**
+```bash
+npm run predist:mac
+# This runs "npm run generate:icons"
+```
+
+**Build and package** (two options):
+
+1. Single-step build and package
+```bash
+npm run build:release:mac
+# # Runs "npm run build" + "npm run dist:mac"
+```
+
+2. Manual two-step
+```bash
+npm run build
+npm run dist:mac
+```
+The packaged `.dmg` file will be available inside the `release/` directory.
+
+#### Notes
+
+- The macOS build uses electron-builder --mac (as defined in package.json).
+
+- Targets both x64 and arm64 architectures.
+
+- Minimum supported version: macOS 10.13.
+
+- The build uses Hardened Runtime and config/entitlements.mac.plist for signing.
+
+- Unsigned local builds will still run but may show Gatekeeper warnings.
+
+#### Troubleshooting
+
+- If electron-builder throws "macOS builds can only be run on macOS", you are attempting to build on Windows/Linux.
+
+- If icons or assets are missing, re-run:
+```bash
+npm run predist:mac
 ```
 
 ## 🤝 Contributors
@@ -111,4 +177,5 @@ Give a ⭐️ if this project helped you!
 
 ---
 
-**Note**: This application is currently available for Windows only. macOS and Linux support may be added in the future.
+**Note:** DevUtils now supports both Windows and macOS builds. Linux support may be added in the future.
+
