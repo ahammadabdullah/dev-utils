@@ -141,6 +141,7 @@ npm run build:release
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rohandol112"><img src="https://avatars.githubusercontent.com/u/133633875?v=4?s=100" width="100px;" alt="rohandol112"/><br /><sub><b>rohandol112</b></sub></a><br /><a href="#code-rohandol112" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://frustateduser.github.io/koustubh.github.io/"><img src="https://avatars.githubusercontent.com/u/137117503?v=4?s=100" width="100px;" alt="KOUSTUBH BADSHAH"/><br /><sub><b>KOUSTUBH BADSHAH</b></sub></a><br /><a href="#code-frustateduser" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Parthav46"><img src="https://avatars.githubusercontent.com/u/25856645?v=4?s=100" width="100px;" alt="Parthav Patel"/><br /><sub><b>Parthav Patel</b></sub></a><br /><a href="#code-Parthav46" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/caffeine-rohit"><img src="https://avatars.githubusercontent.com/u/188952138?v=4?s=100" width="100px;" alt="Caffeine-rohit"/><br /><sub><b>Caffeine-rohit</b></sub></a><br /><a href="#code-caffeine-rohit" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
