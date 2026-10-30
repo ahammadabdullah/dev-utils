@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to DevUtils! This document provides guidelines and information for contributors.
 
+By participating in this project, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -64,7 +66,6 @@ Thank you for your interest in contributing to DevUtils! This document provides 
    ```
 
 2. **Make Changes**
-
    - Follow the existing code style
    - Write clear commit messages
    - Test your changes thoroughly
@@ -107,13 +108,11 @@ To add a new utility tool:
    ```
 
 2. **Implement the Tool**
-
    - Use the ToolCard component wrapper
    - Follow existing patterns for UI consistency
    - Add proper TypeScript types
 
 3. **Add to Navigation**
-
    - Update `src/lib/types.ts` with the new tool type
    - Add icon and metadata to TOOLS array
 
